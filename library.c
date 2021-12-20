@@ -25,14 +25,7 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
   // TO DO :
   
   // dynamically allocate the bookList array for storing books
-  theLibrary->bookList = malloc (7 * sizeof(Book));
-  char w = 'w';
-  theLibrary->bookList->title[0] = w;
-  //printf("%c", theLibrary->bookList->title[0]);
-  //printf("%p", theLibrary->bookList[0]);
-  //printf ("%li", sizeof (Book));
-  //printf ("%li", sizeof (theLibrary->bookList->available));
-
+  theLibrary->bookList = malloc (7 * sizeof (Book));
 
   // check the book file exists 
   // use the error message and exit the program if it does not
@@ -49,7 +42,6 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
 
   // remember to close the file
   fclose (fp);
-
   // Initialise the User data
 
   return;
@@ -69,16 +61,20 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
 int readBooks( FILE *books, Book *bookList ) {
 
   int numBooks = 0;
-  //printf ("%char", *bookList->title);
-
   // TO DO:
   
   // read from the book file pointer
- 
+  
   // assign values to a Book structure in the bookList array for each complete record
   
   // read data until the file ends
-  
+  char books_txt = fgetc (books);
+  while (books_txt != EOF) {
+  	printf("%c", books_txt);
+	books_txt = fgetc(books);
+  }
+  fclose(books);
+
   return numBooks;
 }
 

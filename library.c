@@ -68,13 +68,17 @@ int readBooks( FILE *books, Book *bookList ) {
   // assign values to a Book structure in the bookList array for each complete record
   
   // read data until the file ends
-  char books_txt = fgetc (books);
-  while (books_txt != EOF) {
-  	printf("%c", books_txt);
-	books_txt = fgetc(books);
+  char books_txt[40];
+  int count = 0;
+  
+  while (fgets (books_txt , 40, books) != NULL) {
+  	if (books_txt[0] != '\n') {
+		printf("%d", count++);
+  		printf("%s", books_txt);
+	}
+	else
+		continue;	
   }
-  fclose(books);
-
   return numBooks;
 }
 
@@ -87,7 +91,7 @@ void exitLibrary( Library *theLibrary ) {
   // TO DO:
 
   // free the allocated lists
-
+  free(theLibrary->bookList);
   return;
 }
 

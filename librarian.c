@@ -31,12 +31,9 @@ void listBooks( Book *bookList, int numBooks ) {
   // TO DO :
   //
   // list the books in format "name - title"
-  for (int i = 0; i < 7; i++) {
-  	//printf("%s - %s", (bookList+i)->author, (bookList+i)->title);
-	//for (int j = 0; j < sizeof(bookList->author)
-  	printf("\n%s", bookList->author);
-        //fflush(stdout);
-  	printf("-%s", "happy\0");
+  printf("%d", numBooks);
+  for (int i = 0; i < numBooks; i++) {
+  	printf("\n%s - %s", bookList[i].author, bookList[i].title);
   } 
   return;
 }

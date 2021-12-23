@@ -25,8 +25,8 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
   // TO DO :
   
   // dynamically allocate the bookList array for storing books
-  theLibrary->bookList = malloc (7 * sizeof (Book));
-
+  theLibrary->bookList = (Book*)malloc (7 * sizeof(Book));
+  
   // check the book file exists 
   // use the error message and exit the program if it does not
   if (strcmp (bookFile, "books.txt") != 0) {
@@ -69,16 +69,44 @@ int readBooks( FILE *books, Book *bookList ) {
   
   // read data until the file ends
   char books_txt[40];
-  int count = 0;
-  
+  int count_author = 0;
+  int count_title = 0;
+
+  while (fgets((bookList + count_author)->author, 40, books) != NULL) {
+	if ((bookList + count_author)->author[0] != '\n') {
+	  fgets((bookList+count_title)->title, 40, books);
+	  count_title++;
+	count_author++;
+	}
+	else {
+	 	continue;
+	}
+  }
+
+/*
   while (fgets (books_txt , 40, books) != NULL) {
   	if (books_txt[0] != '\n') {
-		printf("%d", count++);
   		printf("%s", books_txt);
 	}
 	else
 		continue;	
   }
+*/
+  printf("%s", (bookList+0)->author);
+  printf("%s", (bookList+0)->title);
+  printf("%s", (bookList+1)->author);
+  printf("%s", (bookList+1)->title);
+  printf("%s", (bookList+2)->author);
+  printf("%s", (bookList+2)->title);
+  printf("%s", (bookList+3)->author);
+  printf("%s", (bookList+3)->title);
+  printf("%s", (bookList+4)->author);
+  printf("%s", (bookList+4)->title);
+  printf("%s", (bookList+5)->author);
+  printf("%s", (bookList+5)->title);
+  printf("%s", (bookList+6)->author);
+  printf("%s", (bookList+6)->title);
+
   return numBooks;
 }
 

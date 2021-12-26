@@ -38,11 +38,16 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
   fp = fopen (bookFile, "r");
 
   // use the readBooks function to read in the file and add the book records into the bookList array
-  readBooks (fp, theLibrary->bookList );
+  theLibrary->numBooks = readBooks (fp, theLibrary->bookList );
 
   // remember to close the file
   fclose (fp);
+
   // Initialise the User data
+  for (int i = 0; i < theLibrary->maxBorrowed; i++) {
+  	theLibrary->theUser.borrowed[i] = NULL;
+  }
+  theLibrary->theUser.numBorrowed = 0;
 
   return;
 }
@@ -69,13 +74,11 @@ int readBooks( FILE *books, Book *bookList ) {
   
   // read data until the file ends
 
-  //char books_txt[40];
-  int books_number = 0;
   int count_author = 0;
   int count_title = 0;
   
   while (fgets((bookList + count_author)->author, 40, books) != NULL) {
-	books_number++;
+	numBooks++;
 	if ((bookList + count_author)->author[0] != '\n') {
 	  fgets((bookList+count_title)->title, 40, books);
 	  count_title++;
@@ -85,26 +88,15 @@ int readBooks( FILE *books, Book *bookList ) {
 	 	continue;
 	}
   }
-  books_number /= 2;
-  //numBooks /= 2;
-  //Library.numBooks = numBooks;
-  //Library.numBooks = 1;
-  for (int i = 0; i < books_number; i++) {
-	  //bookList[i].author[strcspn(bookList[i].author, "\n")] = 0;
+  numBooks /= 2;
+
+  for (int i = 0; i < numBooks; i++) {
 	  removeNewLine(bookList[i].author);
+          bookList[i].available = 1;
   }
 
-/*
-  while (fgets (books_txt , 40, books) != NULL) {
-  	if (books_txt[0] != '\n') {
-  		printf("%s", books_txt);
-	}
-	else
-		continue;	
-  }
-*/
-  
   printf("%d", numBooks); 
+  printf("%d", bookList[6].available);
   printf("%s""\n", bookList[1].author);
   printf("%s", (bookList+0)->author);
   printf("%s", (bookList+0)->title);

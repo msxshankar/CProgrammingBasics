@@ -20,8 +20,11 @@ void listAvailableBooks( Book *bookList, int numBooks ) {
   // TO DO :  
 
   // print out available books with format "list number - author - title" on each line
-  for (int i = 0; i < 7; i++) {
-	  printf("\n%d - %s - %s", ++numBooks, bookList[i].author, bookList[i].title);
+  for (int i = 0; i < numBooks; i++) {
+  	if (bookList[i].available != 0)
+		printf("\n%d - %s - %s", i, bookList[i].author, bookList[i].title);
+  	else
+		continue;
   }
   
   return;

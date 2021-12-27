@@ -44,22 +44,31 @@ void borrowBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
   // For any error message you should return to the menu
 
   // check that the user can borrow a book
-  if (theUser->numBorrowed > 1) { 
+  if (theUser->numBorrowed >= 1) { 
 	  printf("You have to return a book before you can borrow another\n");
+	  return;
   }
   // request the choice of book 
-  int number = 0;
+  int choiceBorrow = 0;
   printf("Please type a number: ");
-  scanf("%i", &number);
+  scanf("%i", &choiceBorrow);
   
   // check that the choice is valid 
   // error messages
-  printf("Error\nInvalid choice\n");
-  printf("Book is not available\n");
+  if ((choiceBorrow < 0) || (choiceBorrow > maxBorrowed-1)) {
+	  printf("Error\nInvalid choice\n");
+	  return;
+  }
+  
+  if (bookList[choiceBorrow].available == 0) {
+	  printf("Book is not available\n");
+ 	  return;
+  }
   
   // borrow the book, update the data structures
-  bookList[number - 1].available = 0;
-  //theUser->borrowed[0] = bookList[number - 1].author, bookList[number - 1].title;
+  bookList[choiceBorrow].available = 0;
+  //theUser->borrowed[theUser->numBorrowed]->author = bookList[choiceBorrow].author;
+  //theUser->borrowed[theUser->numBorrowed]->title = bookList[choiceBorrow].title;
   theUser->numBorrowed++;
 
   return; 
@@ -76,6 +85,13 @@ void listMyBooks( User *theUser, Book *bookList, int maxBorrowed ) {
   // TO DO :  
 
   // list my books in format "number - author - title"
+//printf("%s", theUser->borrowed[0]->author);
+ for (int i = 0; i < maxBorrowed; i++) {
+  	if (theUser->borrowed[i] == NULL)
+        	continue;	
+        else
+		printf("\n%d - %s - %s", i , theUser->borrowed[i]->author, theUser->borrowed[i]->title);
+  }
 
   return;
 }
@@ -95,15 +111,22 @@ void returnBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
 
   // check that we have borrowed books 
   // error messages
-  printf("Error\nYou have not borrowed any books\n");
+  if (theUser->numBorrowed == 0) {
+	  printf("Error\nYou have not borrowed any books\n");
+   	  return;
+  }
 
   // request the choice of book 
   // message
+  int choiceReturn = 0;
   printf("Which book? (number):");
-
+  scanf("%i", &choiceReturn);
   // check the choice is valid
   // error messages
-  printf("Error\nInvalid choice\n");
+  if ((choiceReturn < 0) || (choiceReturn > maxBorrowed-1)) {
+	  printf("Error\nInvalid choice\n");
+	  return;
+  }
 
   // return the book and update data structures 
 

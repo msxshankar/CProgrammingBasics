@@ -45,7 +45,9 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
 
   // Initialise the User data
   for (int i = 0; i < theLibrary->maxBorrowed; i++) {
-  	theLibrary->theUser.borrowed[i] = NULL;
+  	//theLibrary->theUser.borrowed[i] = (Book*)calloc (1,sizeof(Book));
+  	theLibrary->theUser.borrowed[i] = (Book*)malloc (sizeof(Book));
+	theLibrary->theUser.borrowed[i] = NULL;
   }
   theLibrary->theUser.numBorrowed = 0;
 
@@ -96,7 +98,7 @@ int readBooks( FILE *books, Book *bookList ) {
   }
 
   printf("%d", numBooks); 
-  printf("%d", bookList[6].available);
+  printf("%d", bookList[7].available);
   printf("%s""\n", bookList[1].author);
   printf("%s", (bookList+0)->author);
   printf("%s", (bookList+0)->title);
@@ -110,8 +112,8 @@ int readBooks( FILE *books, Book *bookList ) {
   printf("%s", (bookList+4)->title);
   printf("%s", (bookList+5)->author);
   printf("%s", (bookList+5)->title);
-  printf("%s", (bookList+6)->author);
-  printf("%s", (bookList+6)->title);
+  printf("%s", (bookList+7)->author);
+  printf("%s", (bookList+7)->title);
 
   return numBooks;
 }

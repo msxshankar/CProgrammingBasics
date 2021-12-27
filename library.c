@@ -47,7 +47,8 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
   for (int i = 0; i < theLibrary->maxBorrowed; i++) {
   	//theLibrary->theUser.borrowed[i] = (Book*)calloc (1,sizeof(Book));
   	theLibrary->theUser.borrowed[i] = (Book*)malloc (sizeof(Book));
-	theLibrary->theUser.borrowed[i] = NULL;
+ 	theLibrary->theUser.borrowed[i]->author[0] = 0;
+ 	theLibrary->theUser.borrowed[i]->title[0] = 0;
   }
   theLibrary->theUser.numBorrowed = 0;
 

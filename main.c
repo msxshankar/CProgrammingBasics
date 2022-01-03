@@ -30,7 +30,7 @@ int main( int argc, char **argv )
     if (argc != 2) {
 	printf("Error\nExpected use: ./library books.txt\n"); 
 	exit(0);    	
-}
+    }
 
     // assign command line value to filename string
     strcpy(bookFile, argv[1]);

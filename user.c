@@ -36,7 +36,6 @@ void listAvailableBooks( Book *bookList, int numBooks ) {
 // bookList - the array of Book structures
 // numBooks - the number of books
 // maxBorrowed - max books we can borrow
-int choiceBorrow = 0;
 void borrowBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) {
 
   // TO DO :  
@@ -44,14 +43,15 @@ void borrowBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
   // For any error message you should return to the menu
 
   // check that the user can borrow a book
-  if (theUser->numBorrowed >= 1) { 
+  if (theUser->numBorrowed >= 4) { 
 	  printf("You have to return a book before you can borrow another\n");
 	  return;
   }
   // request the choice of book 
-  //int choiceBorrow = 0;
+  int choiceBorrow = 0;
   printf("Which book? (number):");
   choiceBorrow = optionChoice();
+  printf("%i", choiceBorrow);
   
   // check that the choice is valid 
   // error messages
@@ -68,18 +68,29 @@ void borrowBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
   // borrow the book, update the data structures
   bookList[choiceBorrow].available = 0;
 
+ 
+  int user_position = 0;
+  for (int i = 0; i < maxBorrowed; i++) {
+	  if (theUser->borrowed[i]->available == -1) {
+	        break;
+ 	  }
+	  else
+		user_position++;
+  }
+
   int i;
   for (i = 0; bookList[choiceBorrow].author[i] != '\0'; i++) {
-  	theUser->borrowed[theUser->numBorrowed]->author[i] = bookList[choiceBorrow].author[i];
+  	theUser->borrowed[user_position]->author[i] = bookList[choiceBorrow].author[i];
   }
-  theUser->borrowed[theUser->numBorrowed]->author[i] = '\0'; 
+  theUser->borrowed[user_position]->author[i] = '\0'; 
 
   for (i = 0; bookList[choiceBorrow].title[i] != '\0'; i++) {
-  	theUser->borrowed[theUser->numBorrowed]->title[i] = bookList[choiceBorrow].title[i];
+  	theUser->borrowed[user_position]->title[i] = bookList[choiceBorrow].title[i];
   }
-  theUser->borrowed[theUser->numBorrowed]->title[i] = '\0'; 
+  theUser->borrowed[user_position]->title[i] = '\0'; 
 
   theUser->numBorrowed++;
+  theUser->borrowed[user_position]->available = choiceBorrow;
 
   return; 
 }
@@ -96,7 +107,7 @@ void listMyBooks( User *theUser, Book *bookList, int maxBorrowed ) {
 
   // list my books in format "number - author - title"
  for (int i = 0; i < maxBorrowed; i++) {
-  	if (theUser->borrowed[i]->author[0] == 0)
+  	if (theUser->borrowed[i]->available == -1)
         	continue;	
         else
 		printf("\n%d - %s - %s", i , theUser->borrowed[i]->author, theUser->borrowed[i]->title);
@@ -138,7 +149,8 @@ void returnBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
   }
 
   // return the book and update data structures 
-  bookList[choiceBorrow].available = 1;
+  bookList[theUser->borrowed[choiceReturn]->available].available = 1;
+  theUser->borrowed[choiceReturn]->available = -1;
   theUser->borrowed[choiceReturn]->author[0] = 0; 
   theUser->numBorrowed--;
   return;

@@ -22,7 +22,7 @@ void listAvailableBooks( Book *bookList, int numBooks ) {
   // print out available books with format "list number - author - title" on each line
   for (int i = 0; i < numBooks; i++) {
   	if (bookList[i].available != 0)
-		printf("\n%d - %s - %s", i, bookList[i].author, bookList[i].title);
+		printf("\n%d - %s- %s", i, bookList[i].author, bookList[i].title);
   	else
 		continue;
   }
@@ -44,14 +44,13 @@ void borrowBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
 
   // check that the user can borrow a book
   if (theUser->numBorrowed >= 4) { 
-	  printf("You have to return a book before you can borrow another\n");
+	  printf("\nYou have to return a book before you can borrow another\n");
 	  return;
   }
   // request the choice of book 
   int choiceBorrow = 0;
   printf("Which book? (number):");
   choiceBorrow = optionChoice();
-  printf("%i", choiceBorrow);
   
   // check that the choice is valid 
   // error messages
@@ -110,7 +109,7 @@ void listMyBooks( User *theUser, Book *bookList, int maxBorrowed ) {
   	if (theUser->borrowed[i]->available == -1)
         	continue;	
         else
-		printf("\n%d - %s - %s", i , theUser->borrowed[i]->author, theUser->borrowed[i]->title);
+		printf("\n%d - %s- %s\n", i , theUser->borrowed[i]->author, theUser->borrowed[i]->title);
   }
   return;
 }

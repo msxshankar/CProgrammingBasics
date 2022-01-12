@@ -142,7 +142,12 @@ void returnBook( User *theUser, Book *bookList, int numBooks, int maxBorrowed ) 
 
   // check the choice is valid
   // error messages
-  if ((choiceReturn < 0) || (choiceReturn > numBooks-1)) {
+  if ((choiceReturn < 0) || (choiceReturn > maxBorrowed-1)) {
+	  printf("Error\nInvalid choice\n");
+	  return;
+  }
+  
+  if (theUser->borrowed[choiceReturn]->available == -1) {
 	  printf("Error\nInvalid choice\n");
 	  return;
   }

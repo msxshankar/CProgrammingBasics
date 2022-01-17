@@ -36,6 +36,11 @@ void initLibrary( char *bookFile, Library *theLibrary ) {
   // open it if it exists
   FILE *fp;
   fp = fopen (bookFile, "r");
+  
+  if (fp == NULL) {
+	  printf("Error\nBook file does not exist: %s\n",bookFile);
+	  exit(0);
+  }
 
   // use the readBooks function to read in the file and add the book records into the bookList array
   theLibrary->numBooks = readBooks (fp, theLibrary->bookList );
